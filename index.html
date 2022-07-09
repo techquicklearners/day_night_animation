@@ -1,0 +1,137 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day & Night Animation Using JS</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #ground {
+        background: transparent url(ground.png) repeat-x bottom center;
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        width: 100%;
+        height: 200px;
+      }
+      #sky {
+        background-color: black;
+        width: 100%;
+        height: 100%;
+      }
+      #sun {
+        position: absolute;
+        left: 45%;
+        top: 10%;
+        background: transparent url(sun.png) no-repeat center center;
+        width: 150px;
+        height: 150px;
+        display: none;
+      }
+      #moon {
+        position: absolute;
+        left: 15%;
+        top: 10%;
+        background: transparent url(moon.png) no-repeat center center;
+        width: 150px;
+        height: 150px;
+      }
+      hr {
+        width: 50px;
+        border-color: transparent;
+        border-right-color: white;
+        border-right-width: 50px;
+        position: absolute;
+        bottom: 100%;
+        transform-origin: 100% 50%;
+        animation-name: rain;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+      }
+      @keyframes rain {
+        from {
+          transform: rotate(105deg) translateX(0);
+        }
+        to {
+          transform: rotate(105deg) translateX(calc(100vh + 20px));
+        }
+      }
+      .control {
+        position: absolute;
+        color: white;
+      }
+      .control span {
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+      #rain {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="control">
+      <span id="dayControl" type="1">Day</span>
+      <span id="rainControl" type="0">Start Rain</span>
+    </div>
+    <div id="sky"></div>
+    <div id="sun"></div>
+    <div id="rain"></div>
+    <div id="moon"></div>
+    <div id="ground"></div>
+  </body>
+  <script>
+    let hr;
+    let ct = 100;
+    for (let i = 0; i < ct; i++) {
+      hr = document.createElement("HR");
+      hr.style.left = Math.floor(Math.random() * window.innerWidth) + "px";
+      hr.style.animationDuration = 0.2 + Math.random() * 0.3 + "s";
+      hr.style.animationDelay = Math.random() * 5 + "s";
+      rain.appendChild(hr);
+    }
+    document
+      .getElementById("dayControl")
+      .addEventListener("click", function (e) {
+        let type = e.target.getAttribute("type");
+        if (type == 1) {
+          e.target.setAttribute("type", 0);
+          moon.style.display = "none";
+          sun.style.display = "block";
+          e.target.innerHTML = "Night";
+          sky.style.background = "blue";
+        } else {
+          e.target.setAttribute("type", 1);
+          moon.style.display = "block";
+          sun.style.display = "none";
+          e.target.innerHTML = "Day";
+          sky.style.background = "black";
+        }
+      });
+    document
+      .getElementById("rainControl")
+      .addEventListener("click", function (e) {
+        let type = e.target.getAttribute("type");
+        if (type == 1) {
+          e.target.setAttribute("type", 0);
+          e.target.innerHTML = "Start rain";
+          rain.style.display = "none";
+        } else {
+          e.target.setAttribute("type", 1);
+          e.target.innerHTML = "Stop rain";
+          rain.style.display = "block";
+        }
+      });
+  </script>
+</html>
